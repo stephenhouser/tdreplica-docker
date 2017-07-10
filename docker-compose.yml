@@ -1,4 +1,4 @@
-version: '3'
+version: '2'
 services:
   mariadb:
     image: mariadb:10.3
@@ -36,7 +36,7 @@ services:
       BB_VERSION: 2.5.12 
       THEMES: >-
         twentyfourteen,
-        [tdreplica-wptheme]https://github.com/stephenhouser/tdreplica-wptheme/archive/master.zip,
+        #[tdreplica-wptheme]https://github.com/stephenhouser/tdreplica-wptheme/archive/master.zip,
       PLUGINS: >-
         aryo-activity-log,
         bbpress-enable-tinymce-visual-tab,
