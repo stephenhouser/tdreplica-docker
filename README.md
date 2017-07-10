@@ -4,10 +4,12 @@ This project contains the `docker-compose` files to create, import, and start th
 
 # Requirements
 
-* `buddy-bbpress-starter` needs to be 'built' and the image available before any of this
+* [buddy-bbpress-starter](https://github.com/stephenhouser/buddy-bbpress-starter) needs to be 'built' and the image available before any of this
 will work.
 
-* `.env` file with `DB_PASSWORD=` must also exist. This is MariaDB's root password. It is used by the WordPress install to create tables and access the data.
+* [tdreplica-theme](https://github.com/stephenhouser/tdreplica-theme) is used as the WordPress theme. The current `master` branch is pulled at creation time. NOTE: `wp-cli` does some funny stuff with directory names when pulling from tagged versions of GitHub repositories. That means, things won't work correctly if you specify a tag and not master!
+
+* `.env` file with `DB_PASSWORD=` must also exist. This is MariaDB's root password. It is used by the WordPress install to create tables and access the data. It is never checked in to git!
 
 ## Playbook
 
