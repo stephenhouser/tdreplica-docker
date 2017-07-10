@@ -1,27 +1,37 @@
-# TDReplica Container
+# TDReplica Container Scripts
 
-Docker-compose project and tools for TD Replica website. 
+This project contains the `docker-compose` files to create, import, and start the [MG TD Replica Car Club](http://tdreplica.com) website. The website uses [WordPress](http://wordpress.org) and [MariaDB](http://mariadb.com) in addition to several WordPress plugins. Most notably [BuddyPress](http://buddypress.org) and [bbPress](http://bbpress.org)
 
-Playbook scripts are in `tools` (see below).
+# Requirements
 
-buddy-bbpress-starter need to be 'built' and the image available before this
+* `buddy-bbpress-starter` needs to be 'built' and the image available before any of this
 will work.
 
-## Tools
+* `.env` file with `DB_PASSWORD=` must also exist. This is MariaDB's root password. It is used by the WordPress install to create tables and access the data.
 
-* create.sh: creates and starts up the `mariadb` and `wordpress` containers. 
-Imports data in the `data` directory.
-* export.sh: exports the current database to the `data` directory.
-* stop.sh: stops the `mariadb` and `wordpress` containers.
-* destroy.sh: stop and remove the `mariadb` and `wordpress` containers.
+## Playbook
 
-## `webwiz` and `uploads`
+* Startup: `docker-compose up` (creates and starts up the `mariadb` and `wordpress` containers. Imports SQL data in the `data` directory).
 
-These directories are the data files for user uploads and old WebWiz images that
-are used by the wordpress container. They are (should be) persistent across
-containers.
+* Shutdown: `docker-compose stop` (stops the `mariadb` and `wordpress` containers).
 
-## TDr-theme
+* Destroy: `docker-compose stop; docker-compose rm` (stop and remove the `mariadb` and `wordpress` containers. Does *not* destroy data volumes)
+
+* Export MariaDB Data: `export.sh` exports the current database to the `data` directory.
+
+* Destroy Data: `docker volume rm tdreplica_database tdreplica_webwiz tdreplica_uploads`
+
+Additional playbook scripts are in `tools` (see below).
+
+# Directories
+
+* `data`: Location for SQL to be imported at creation time by MariaDB container.
+
+* `webwiz`: Images from old WebWiz forum used by the WordPress container. Maps to `/webwiz` inside container's web directory. This folder contains WebWiz files along with un-migrated user images posted to the original WebWiz forums. By 'un-migrated' I mean not migrated into the WordPress rtMedia folder content in `uploads`.
+
+* `uploads`: WordPress user uploads directory. Maps to `.../wp-content/uploads` in WordPress container. This should be persistent across containers. It is user submitted content and should not be lost!
+
+## tdreplica-theme
 Checked out version of TDr-theme for WordPress/BuddyPress/bbpress.
 
 NOTE: Currently the docker-compose project uses this directory directly. 
