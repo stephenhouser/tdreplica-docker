@@ -1,0 +1,59 @@
+version: '3'
+services:
+  mariadb:
+    image: mariadb:10.3
+    volumes:
+      - database:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+
+  wordpress:
+    image: stephenhouser/buddy-bbpress:latest-php7.0
+    ports:
+      - 8080:80
+      - 443:443
+    depends_on:
+      - mariadb
+    volumes:
+      - ./data:/data # Required if importing an existing database
+      - ./uploads:/app/wp-content/uploads
+      - ./webwiz:/app/webwiz
+      - ./tdreplica-theme:/app/wp-content/themes/tdr.theme   # Theme development
+      #- uploads:/app/wp-content/uploads
+      #- webwiz:/app/webwiz
+      #- ./tweaks.ini:/usr/local/etc/php/conf.d/tweaks.ini # Optional tweaks to the php.ini config
+      #- ./yourplugin:/app/wp-content/plugins/yourplugin # Plugin development
+    environment:
+      DB_HOST: mariadb
+      DB_NAME: wordpress
+      DB_PASS: ${DB_PASSWORD}
+      WP_VERSION: 4.8
+      BP_VERSION: 2.8.2
+      BB_VERSION: 2.5.12 
+      THEMES: >-
+        twentyfourteen,
+        [tdreplica-wptheme]https://github.com/stephenhouser/tdreplica-wptheme/archive/master.zip,
+      PLUGINS: >-
+        aryo-activity-log,
+        bbpress-enable-tinymce-visual-tab,
+        bbpress-pencil-unread,
+        buddypress-usernames-only,
+        enhanced-media-library,
+        image-upload-for-bbpress,
+        fourteen-colors,
+        gd-bbpress-tools,
+        buddypress-media,
+        tinymce-advanced,
+      URL_REPLACE: tdreplica.com,localhost:8080
+      WP_DEBUG: 'true'
+
+#        wp-custom-admin-bar,
+#        hide-admin-bar-search,
+#        sitewide-message,
+#        simple-ip-ban,
+
+volumes:
+  database:
+#  webwiz:
+#  uploads:
