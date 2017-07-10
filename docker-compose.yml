@@ -17,13 +17,16 @@ services:
       - mariadb
     volumes:
       - ./data:/data # Required if importing an existing database
-      - ./uploads:/app/wp-content/uploads
-      - ./webwiz:/app/webwiz
-      - ./tdreplica-theme:/app/wp-content/themes/tdr.theme   # Theme development
-      #- uploads:/app/wp-content/uploads
-      #- webwiz:/app/webwiz
+      - ../tdreplica-theme:/app/wp-content/themes/tdr.theme # Theme development
+
+      # Location of WordPress and site data (from archive of tdreplica.com)
+      #- uploads:/app/wp-content/uploads # Use container volume
+      - ../tdreplica.com/wp-content/uploads:/app/wp-content/uploads # use local directory
+      - webwiz:/app/webwiz # Use container volume
+      #- ../tdreplica.com/webwiz:/app/webwiz # use local directory
+
+      # Unused at the moment
       #- ./tweaks.ini:/usr/local/etc/php/conf.d/tweaks.ini # Optional tweaks to the php.ini config
-      #- ./yourplugin:/app/wp-content/plugins/yourplugin # Plugin development
     environment:
       DB_HOST: mariadb
       DB_NAME: wordpress
@@ -55,5 +58,5 @@ services:
 
 volumes:
   database:
-#  webwiz:
+  webwiz:
 #  uploads:
