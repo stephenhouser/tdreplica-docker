@@ -33,13 +33,13 @@ Additional playbook scripts are in `tools` (see below).
 
 * `uploads`: WordPress user uploads directory. Maps to `.../wp-content/uploads` in WordPress container. This should be persistent across containers. It is user submitted content and should not be lost!
 
-## tdreplica-theme
-Checked out version of TDr-theme for WordPress/BuddyPress/bbpress.
+## ../tdreplica-theme
+Checked out version of tdreplica-theme for WordPress/BuddyPress/bbpress.
 
 NOTE: Currently the docker-compose project uses this directory directly. 
 The alternative is to check it out from github when building the image.
 
-## buddy-bbpress-starter
+## ../buddy-bbpress-starter
 Checked out version of docker container configuration for creating a
 WordPress instance with BuddyPress and bbPress already installed.
 
