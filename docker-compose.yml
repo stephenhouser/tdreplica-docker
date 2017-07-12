@@ -9,8 +9,8 @@ services:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
 
   wordpress:
-    build: ../buddy-bbpress-starter/php7.0
-    image: stephenhouser/buddy-bbpress:latest-php7.0
+    #image: stephenhouser/buddy-bbpress:latest-php7.0
+    build: ./wordpress
     restart: always
     ports:
       - 8080:80
@@ -18,7 +18,7 @@ services:
     depends_on:
       - mariadb
     volumes:
-      - ./data:/data # Required if importing an existing database
+      - ./data:/data # Required for importing an existing database (*.sql)
       # Location of WordPress and site data (from archive of tdreplica.com)
       - uploads:/app/wp-content/uploads # Use container volume
       - webwiz:/app/webwiz # Use container volume
@@ -48,8 +48,9 @@ services:
         tinymce-advanced,
       URL_REPLACE: tdreplica.com,localhost:8080
       WP_DEBUG: 'true'
-      
-#         fourteen-colors,
+
+# Disabled plugins     
+#        fourteen-colors,
 #        wp-custom-admin-bar,
 #        hide-admin-bar-search,
 #        sitewide-message,
